@@ -10,7 +10,7 @@ import networkx as nx
 from impactvision import router as impact_router
 from futureport import router as futureport_router
 from carbon_lens import router as carbon_router
-
+from tideguard import router as tideguard_router
 
 # --------------------------------------------------
 # 1. LOAD COASTAL NETWORK DATA
@@ -60,13 +60,14 @@ app.add_middleware(
 app.include_router(impact_router)
 app.include_router(futureport_router)
 app.include_router(carbon_router)
-
+app.include_router(tideguard_router)ks
 
 # --------------------------------------------------
 # 5. BUILD COASTAL LOGISTICS NETWORK
 # --------------------------------------------------
 
 def build_graph(closed):
+
     g = nx.Graph()
 
     # Add available ports
