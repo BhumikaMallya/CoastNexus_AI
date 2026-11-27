@@ -60,7 +60,7 @@ app.add_middleware(
 app.include_router(impact_router)
 app.include_router(futureport_router)
 app.include_router(carbon_router)
-app.include_router(tideguard_router)ks
+app.include_router(tideguard_router)
 
 # --------------------------------------------------
 # 5. BUILD COASTAL LOGISTICS NETWORK
