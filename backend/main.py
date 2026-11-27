@@ -12,6 +12,8 @@ IDS = {p["id"] for p in ports}
 app = FastAPI(title="CoastNexus API")
 app.add_middleware(CORSMiddleware, allow_origins=["*"],
                    allow_methods=["*"], allow_headers=["*"])
+from futureport import router as futureport_router
+app.include_router(futureport_router)
 
 def build_graph(closed):
     g = nx.Graph()
@@ -51,4 +53,4 @@ def route(from_: str = Query(..., alias="from"), to: str = Query(...), closed: s
     return {"path": path, "legs": legs,
             "hours": sum(l["hours"] for l in legs),
             "cost": sum(l["cost"] for l in legs),
-            "co2_kg": sum(l["co2_kg"] for l in legs)}
+            "co2_kg": sum(l["co2_kg"] for l in legs)};
