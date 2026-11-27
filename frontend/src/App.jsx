@@ -1,4 +1,5 @@
 
+import DisruptionSimulator from './DisruptionSimulator'
 import { useState } from 'react'
 import {
   Anchor, Activity, AlertTriangle, BarChart3, Bell, Boxes,
@@ -34,6 +35,7 @@ const menuItems = [
   { name: 'CoastGenesis AI', icon: Waves },
   { name: 'CarbonLens AI', icon: Leaf },
   { name: 'TideGuard AI', icon: CloudLightning },
+  { name: 'Disruption Simulator', icon: BrainCircuit },
 ]
 
 const portPerformance = [
@@ -899,6 +901,10 @@ function App() {
               fuel use and transport-specific emission factors.
             </p>
           </>
+        )}
+        {/* DISRUPTION SIMULATOR */}
+        {activePage === 'Disruption Simulator' && (
+          <DisruptionSimulator />
         )}
 
         {/* TIDEGUARD AI */}
