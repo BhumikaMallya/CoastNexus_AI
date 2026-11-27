@@ -1,4 +1,6 @@
-﻿import json
+﻿from fastapi import FastAPI
+from impactvision import router as impact_router
+import json
 from pathlib import Path
 import networkx as nx
 from fastapi import FastAPI, HTTPException, Query
@@ -10,6 +12,7 @@ routes = json.loads((DATA / "routes.json").read_text(encoding="utf-8-sig"))
 IDS = {p["id"] for p in ports}
 
 app = FastAPI(title="CoastNexus API")
+app.include_router(impact_router)
 app.add_middleware(CORSMiddleware, allow_origins=["*"],
                    allow_methods=["*"], allow_headers=["*"])
 from futureport import router as futureport_router
