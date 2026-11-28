@@ -49,3 +49,14 @@ select { width: 100%; margin-top: 4px; padding: 8px 10px; color: var(--tx); back
   .app { grid-template-columns: 1fr; height: auto; }
   .stage { height: 70vh; }
 }
+
+.mapbox { height: 100%; width: 100%; }
+.mapbox.dark .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.9) saturate(.75); }
+.mapbox.dark .leaflet-container { background: #0b1a2e; }
+.mapbox.light .leaflet-container { background: #cfe3ea; }
+.mapbox.light .leaflet-tooltip.node-label { color: #0b1a2e; text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 2px #fff; }
+.mapbox.light .leaflet-tooltip.node-label .mono { color: #35506b; }
+.focus { position: absolute; left: 10px; bottom: 30px; z-index: 1000; display: flex; gap: 6px; flex-wrap: wrap; }
+.focus button { cursor: pointer; padding: 6px 10px; font: inherit; font-size: 13px; color: var(--tx); background: rgba(7,17,31,.92); border: 1px solid var(--bd); border-radius: 8px; }
+.focus button:hover { border-color: var(--tl); }
+.legend .cyc { color: #ff8aa0; font-weight: 700; }
