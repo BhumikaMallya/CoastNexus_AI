@@ -10,7 +10,8 @@ def sim(body): return c.post("/futureport/simulate", json=body)
 def test_no_change_is_unchanged():
     r = sim({"pairs": [["INVTZ", "HUB-HSR"]]}).json()
     assert r["results"][0]["impact"] == "unchanged"
-    assert r["results"][0]["baseline"]["hours"] == 20   # fastest mode (sea) kept
+    # 14 h sea + 2 h road + 4 h rail + 5 h rail
+    assert r["results"][0]["baseline"]["hours"] == 25
 
 def test_closing_port_reroutes():
     r = sim({"closed_ports": ["INMAA"], "pairs": [["INKRI", "HUB-HSR"]]}).json()
