@@ -10,9 +10,25 @@ function DisruptionSimulator() {
   const [disruption, setDisruption] = useState('Port Congestion')
   const [cargo, setCargo] = useState('250')
   const [result, setResult] = useState(null)
+  const [cargoError, setCargoError] = useState('')
 
   const analyzeDisruption = () => {
-    const quantity = Math.max(1, Math.min(10000, Number(cargo) || 1))
+    const quantity = Number(cargo)
+
+    if (
+      cargo.trim() === '' ||
+      !Number.isInteger(quantity) ||
+      quantity < 1 ||
+      quantity > 10000
+    ) {
+      setCargoError(
+        'Enter a whole number between 1 and 10,000.'
+      )
+      setResult(null)
+      return
+    }
+
+    setCargoError('')
 
     const alternatives = {
       Mangaluru: 'Kochi',
@@ -31,14 +47,22 @@ function DisruptionSimulator() {
     const alternative = alternatives[port]
     const estimatedDelay = delay[disruption]
 
-    setResult({
+    const newResult = {
       port,
       alternative,
       quantity,
       disruption,
       estimatedDelay,
       action: `Evaluate redirecting ${quantity} cargo units from ${port} to ${alternative}, subject to port capacity and transport availability.`
-    })
+    }
+
+    setResult(newResult)
+
+    window.dispatchEvent(
+      new CustomEvent('coastnexus-scenario-updated', {
+        detail: newResult
+      })
+    )
   }
 
   const cardStyle = {
@@ -70,13 +94,16 @@ function DisruptionSimulator() {
     <div style={{ display: 'grid', gap: '22px' }}>
       <section className="welcome">
         <div>
-          <p className="welcome-tag">INTERACTIVE DISRUPTION ANALYSIS</p>
+          <p className="welcome-tag">
+            INTERACTIVE DISRUPTION ANALYSIS
+          </p>
           <h2>Disruption Simulator</h2>
           <p>
             Simulate a coastal supply-chain disruption and
             explore an alternative cargo recovery strategy.
           </p>
         </div>
+
         <div className="welcome-icon">
           <BrainCircuit size={54} />
         </div>
@@ -99,6 +126,7 @@ function DisruptionSimulator() {
         }}>
           <div>
             <label style={labelStyle}>Affected Port</label>
+
             <select
               style={inputStyle}
               value={port}
@@ -117,6 +145,7 @@ function DisruptionSimulator() {
 
           <div>
             <label style={labelStyle}>Disruption Type</label>
+
             <select
               style={inputStyle}
               value={disruption}
@@ -133,18 +162,50 @@ function DisruptionSimulator() {
 
           <div>
             <label style={labelStyle}>Affected Cargo Units</label>
+
             <input
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                border: cargoError
+                  ? '1px solid #ef4444'
+                  : inputStyle.border
+              }}
               type="number"
               min="1"
               max="10000"
+              step="1"
               value={cargo}
               onChange={(e) => {
                 setCargo(e.target.value)
+                setCargoError('')
                 setResult(null)
               }}
               placeholder="Enter cargo quantity"
+              aria-invalid={Boolean(cargoError)}
+              aria-describedby="cargo-error"
             />
+
+            {cargoError && (
+              <p
+                id="cargo-error"
+                role="alert"
+                style={{
+                  color: '#f87171',
+                  fontSize: '13px',
+                  marginTop: '8px'
+                }}
+              >
+                {cargoError}
+              </p>
+            )}
+
+            <p style={{
+              color: '#8da5b8',
+              fontSize: '12px',
+              marginTop: '7px'
+            }}>
+              Allowed quantity: 1–10,000 whole units
+            </p>
           </div>
         </div>
 
@@ -191,14 +252,19 @@ function DisruptionSimulator() {
                 <p style={labelStyle}>Affected Port</p>
                 <h2>{result.port}</h2>
               </div>
+
               <div>
                 <p style={labelStyle}>Disruption</p>
-                <h2 style={{ fontSize: '19px' }}>{result.disruption}</h2>
+                <h2 style={{ fontSize: '19px' }}>
+                  {result.disruption}
+                </h2>
               </div>
+
               <div>
                 <p style={labelStyle}>Cargo Affected</p>
                 <h2>{result.quantity}</h2>
               </div>
+
               <div>
                 <p style={labelStyle}>Illustrative Delay</p>
                 <h2>{result.estimatedDelay} Hrs</h2>
@@ -225,16 +291,24 @@ function DisruptionSimulator() {
             }}>
               <div style={{ textAlign: 'center' }}>
                 <Ship size={30} />
-                <h3 style={{ marginTop: '10px' }}>{result.port}</h3>
-                <p style={{ color: '#f59e0b' }}>Affected Port</p>
+                <h3 style={{ marginTop: '10px' }}>
+                  {result.port}
+                </h3>
+                <p style={{ color: '#f59e0b' }}>
+                  Affected Port
+                </p>
               </div>
 
               <ArrowRight size={30} color="#38bdf8" />
 
               <div style={{ textAlign: 'center' }}>
                 <Package size={30} />
-                <h3 style={{ marginTop: '10px' }}>{result.alternative}</h3>
-                <p style={{ color: '#34d399' }}>Suggested Alternative</p>
+                <h3 style={{ marginTop: '10px' }}>
+                  {result.alternative}
+                </h3>
+                <p style={{ color: '#34d399' }}>
+                  Suggested Alternative
+                </p>
               </div>
             </div>
 
@@ -246,6 +320,7 @@ function DisruptionSimulator() {
               <h3 style={{ marginBottom: '10px' }}>
                 <Zap size={18} /> Recommended Recovery Action
               </h3>
+
               <p style={{ lineHeight: 1.7 }}>
                 {result.action}
               </p>
