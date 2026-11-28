@@ -1,0 +1,13 @@
+﻿[
+{"id":"INVTZ","name":"Port Visakhapatnam","lat":17.69,"lon":83.29,"type":"port"},
+{"id":"INKRI","name":"Krishnapatnam Deepwater","lat":14.26,"lon":80.12,"type":"port"},
+{"id":"HUB-NEL","name":"Nellore Cold Park","lat":14.44,"lon":79.99,"type":"hub"},
+{"id":"INKAT","name":"Kattupalli Terminal","lat":13.30,"lon":80.33,"type":"port"},
+{"id":"INENR","name":"Kamarajar Ennore","lat":13.26,"lon":80.32,"type":"port"},
+{"id":"INMAA","name":"Port of Chennai","lat":13.08,"lon":80.30,"type":"port"},
+{"id":"WH-SRI","name":"Sri City Logistics Hub","lat":13.52,"lon":80.01,"type":"hub"},
+{"id":"HUB-HSR","name":"Hosur Inland Cold Hub","lat":12.74,"lon":77.83,"type":"hub"},
+{"id":"INPNY","name":"Pondicherry Feeder Port","lat":11.93,"lon":79.83,"type":"port"},
+{"id":"HUB-MDU","name":"Madurai Reefer Depot","lat":9.92,"lon":78.12,"type":"hub"},
+{"id":"INTUT","name":"V.O.C. Tuticorin","lat":8.76,"lon":78.18,"type":"port"}
+]
