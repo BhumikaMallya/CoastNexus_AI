@@ -204,7 +204,7 @@ function DisruptionSimulator() {
               fontSize: '12px',
               marginTop: '7px'
             }}>
-              Allowed quantity: 1–10,000 whole units
+              Allowed quantity: 1-10,000 whole units
             </p>
           </div>
         </div>
